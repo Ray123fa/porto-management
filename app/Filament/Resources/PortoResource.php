@@ -55,7 +55,6 @@ class PortoResource extends Resource
                                     ->required()
                                     ->maxLength(255),
                                 Forms\Components\TextInput::make('url')
-                                    ->nullable()
                                     ->maxLength(255),
                             ]),
                     ])->columnSpanFull()
