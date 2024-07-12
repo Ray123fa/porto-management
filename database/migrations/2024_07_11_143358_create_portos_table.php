@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('image');
             $table->string('tags');
-            $table->string('url');
+            $table->string('url')->nullable();
             $table->timestamps();
         });
     }
