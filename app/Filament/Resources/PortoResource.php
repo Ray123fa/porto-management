@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Models\Porto;
 use App\Filament\Resources\PortoResource\Pages;
 use App\Filament\Resources\PortoResource\RelationManagers;
+use App\Helpers\FileHelper;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Tabs;
@@ -37,8 +38,9 @@ class PortoResource extends Resource
                                     ->downloadable()
                                     ->openable()
                                     ->directory('portos')
+                                    ->maxSize(2048)
                                     ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
-                                        return (string) str($file->getClientOriginalName())->prepend('portos-');
+                                        return FileHelper::generateFileName($file);
                                     })
                                     ->required(),
                             ]),
@@ -80,6 +82,7 @@ class PortoResource extends Resource
                     ->dateTime()
                     ->sortable(),
             ])
+            ->emptyStateHeading('No posts yet')
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\ViewAction::make(),
