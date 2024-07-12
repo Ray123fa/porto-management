@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\Porto;
 use App\Filament\Resources\PortoResource\Pages;
 use App\Filament\Resources\PortoResource\RelationManagers;
-use App\Models\Porto;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Tabs;
@@ -51,9 +51,10 @@ class PortoResource extends Resource
                                 Forms\Components\Textarea::make('description')
                                     ->required()
                                     ->columnSpanFull(),
-                                Forms\Components\TextInput::make('tags')
+                                Forms\Components\TagsInput::make('tags')
                                     ->required()
-                                    ->maxLength(255),
+                                    ->placeholder('Add tags')
+                                    ->separator(','),
                                 Forms\Components\TextInput::make('url')
                                     ->nullable()
                                     ->maxLength(255),
