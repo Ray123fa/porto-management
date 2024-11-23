@@ -11,7 +11,7 @@ class PortoController extends Controller
 {
     public function index()
     {
-        $portos = Porto::paginate(6);
+        $portos = Porto::paginate(5);
         return response()->json(new DataResource(true, 'Seluruh data porto berhasil diambil', $portos));
     }
 
