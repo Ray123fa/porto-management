@@ -3,24 +3,24 @@ name: Deploy to Shared Hosting via SSH
 on:
   push:
     branches:
-      - main  # Hanya trigger jika ada perubahan di branch 'main'
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Setup SSH
-      uses: webfactory/ssh-agent@v0.9.0
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Deploy to Server
-      run: |
-        ssh -o StrictHostKeyChecking=no user@your-server.com "
-          cd /showporto.rfaridh.my.id &&
-          git pull origin main
-        "
+      - name: Deploy to Server
+        run: |
+          ssh -o StrictHostKeyChecking=no rfaridhm@rfaridh.my.id "
+            cd /showporto.rfaridh.my.id &&
+            git pull origin main
+          "
