@@ -21,6 +21,6 @@ jobs:
       - name: Deploy to Server
         run: |
           ssh -o StrictHostKeyChecking=no rfaridhm@rfaridh.my.id "
-            cd /showporto.rfaridh.my.id &&
+            cd /home/rfaridhm/showporto.rfaridh.my.id &&
             git pull origin main
           "
