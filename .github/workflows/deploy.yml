@@ -1,4 +1,4 @@
-name: Deploy to Shared Hosting via SSH
+name: Portfolio Management
 
 on:
   push:
