@@ -9,6 +9,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      SSH_USER: rfaridhm
+      SSH_HOST: rfaridh.my.id
+      PROJECT_DIR: "/home/rfaridhm/showporto.rfaridh.my.id/laravel"
+      PUBLIC_DIR: "/home/rfaridhm/showporto.rfaridh.my.id/"
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -18,10 +24,17 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy to Server
+      - name: Add SSH known host
         run: |
-          ssh -o StrictHostKeyChecking=no rfaridhm@rfaridh.my.id "
-            cd /home/rfaridhm/showporto.rfaridh.my.id/laravel &&
-            git pull origin main &&
-            composer install --no-dev
+          mkdir -p ~/.ssh
+          echo "${{ env.SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ env.SSH_USER }}@${{ env.SSH_HOST }} "
+            cd ${{ env.PROJECT_DIR }} && git pull origin main &&
+            echo 'Copying public files to root subdomain...' &&
+            cd ${{ env.PROJECT_DIR }}/public && find . -type f ! -name 'index.php' -exec cp --parents -f {} ${{ env.PUBLIC_DIR }} \; && find . -type d -exec mkdir -p ${{ env.PUBLIC_DIR }}/{} \;
+            echo 'Deployed successfully!'
           "
